@@ -1,22 +1,28 @@
 package dk.mlwinum;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
-public class Main extends Application {
+public class Main {
+
+    public static final String TEST_PATH = "/home/jagd/Projects/Java/xamprj/test_data/";
 
     public static void main(String[] args) {
-        launch(args);
+        String path = TEST_PATH + "Y2K, bbno$ - Wawawa (Official Video).mp4";
+        File file = new File(path);
+
+        if (!file.exists())
+            throw new RuntimeException("File not found");
+
+        if (!file.getName().endsWith(".mp4"))
+            throw new RuntimeException("File type not supported. Use mp4");
+
+        try {
+            Desktop.getDesktop().open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("view/MainView.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 }
